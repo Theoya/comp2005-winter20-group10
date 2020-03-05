@@ -8,11 +8,14 @@ public class Piece {
 		this.location = loc;
 		this.player = play;
 	}
-	private void move(int i) {
-		this.location = i;
+	void move(int i) {
+		
+		this.location = location+i;
 		
 	}
-	
+	public int getLoc() {
+		return(location);
+	}
 	
 	
 }

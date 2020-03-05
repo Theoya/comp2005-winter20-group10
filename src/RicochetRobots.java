@@ -6,8 +6,14 @@ import javax.swing.*;
 public class RicochetRobots extends JFrame
 {
 	
-	ArrayList<JButton> buttonList = new ArrayList<>();
+	static ArrayList<JButton> save = new ArrayList<>();
+	static ArrayList<JButton> buttonList = new ArrayList<>();
     static JLabel turn = new JLabel("Player 1");
+    int playerTurn = 0;
+    ArrayList<Piece> pieceList = new ArrayList<>();
+    ArrayList<Icon> meepleList = new ArrayList<>();
+    
+    
     
     public RicochetRobots() 
     {
@@ -38,10 +44,21 @@ public class RicochetRobots extends JFrame
 		}
         
         JPanel info = new JPanel();
-        complex();
         
         
+        Piece green = new Piece(56,1);
+        Piece red = new Piece(80,2);
+        Piece yellow = new Piece(180,3);
+        Piece blue = new Piece(200,4);
+        pieceList.add(green);
+        pieceList.add(red);
+        pieceList.add(yellow);
+        pieceList.add(blue);
         
+        meepleList.add(new ImageIcon("GreenMeeple.png"));
+        meepleList.add(new ImageIcon("RedMeeple.png"));
+        meepleList.add(new ImageIcon("YellowMeeple.png"));
+        meepleList.add(new ImageIcon("BlueMeeple.png"));
         
         
 		Ricochet.setLayout(new GridLayout(16,16));
@@ -54,6 +71,32 @@ public class RicochetRobots extends JFrame
 	        	incTurn();
 	        	mainFrame.dispose();
 				}});
+		
+		up.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent arg0) {
+	        	pieceList.get(playerTurn).move(-16);
+	        	buttonList = save;
+	        	buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));
+				}});
+		down.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent arg0) {
+	        	pieceList.get(playerTurn).move(16);
+	        	buttonList = save;
+	        	buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));
+				}});
+		left.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent arg0) {
+	        	pieceList.get(playerTurn).move(-1);
+	        	buttonList = save;
+	        	buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));
+				}});
+		right.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent arg0) {
+	        	pieceList.get(playerTurn).move(1);
+	        	buttonList = save;
+	        	buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));
+				}});
+		
 		info.add(next);
 		info.add(turn);
 		info.add(up);
@@ -88,7 +131,7 @@ public class RicochetRobots extends JFrame
     
     //Here is the proto-code for making the map for the complex/simple board
     //I cannot see the icons for whatever reason but here is most of the code
-    public void complex() {
+    public static void complex() {
     	buttonList.get(5).setIcon(new ImageIcon("RWall.png"));
     	buttonList.get(8).setIcon(new ImageIcon("RWall.png"));
     	buttonList.get(10).setIcon(new ImageIcon("BWall.png"));
@@ -173,7 +216,8 @@ public class RicochetRobots extends JFrame
 				complex.addActionListener(new ActionListener() {
 			        public void actionPerformed(ActionEvent arg0) {
 			        	new RicochetRobots();
-			        	
+			        	complex();
+			        	save = buttonList;
 			        	intro.dispose();
 						}});
 				
