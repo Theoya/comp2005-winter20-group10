@@ -2,7 +2,18 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+
+import javax.swing.Timer;
 import javax.swing.*;
+
+
+
+
+
+
+
+
+
 public class RicochetRobots extends JFrame
 {
 	
@@ -12,6 +23,11 @@ public class RicochetRobots extends JFrame
     int playerTurn = 0;
     ArrayList<Piece> pieceList = new ArrayList<>();
     ArrayList<Icon> meepleList = new ArrayList<>();
+    int lowestBid = 100;
+    int timeStart = 10;
+    private Timer timer;
+    private int timeLog;
+    
     
     
     
@@ -26,6 +42,8 @@ public class RicochetRobots extends JFrame
 		JButton down = new JButton("down");
 		JButton left = new JButton("left");
 		JButton right = new JButton("right");
+		
+		JButton Bid = new JButton("Bid");
 		
         Icon box = new ImageIcon(new ImageIcon("resources/heart.png").getImage().getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH));
         
@@ -97,6 +115,107 @@ public class RicochetRobots extends JFrame
 	        	buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));
 				}});
 		
+		
+		Bid.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent arg0) {
+	        	
+	        	
+	        	JFrame bidFrame = new JFrame("Enter Your Bid");
+	    		bidFrame.setSize(400,400);
+	    		bidFrame.setLocationRelativeTo(null);
+	    		
+	    		JPanel bidPanel = new JPanel();
+	    		JLabel bidEnter = new JLabel("Enter Bid:");
+	    		JLabel currentBids = new JLabel("Other Bids:");
+	    		JLabel countdown = new JLabel();
+	    		JLabel warn = new JLabel("New bids must be lower than all previous builds, you are Green");
+	    		JTextField callBid = new JTextField();
+	    		callBid.setColumns(4);
+	    		JLabel g = new JLabel();
+	    		JLabel r = new JLabel();
+	    		JLabel y = new JLabel();
+	    		JLabel b = new JLabel();
+	    		
+	    		timer = new Timer(1000, new ActionListener() {
+	    		    public void actionPerformed(ActionEvent evt) {
+	    		        if(timeStart == 0){
+	    		        	g.setText("Green: " + callBid.getText() + " Time remaining when entered: " + timeLog);
+	    		        	info.add(g);
+	    		        	r.setText("Red: " + r.getText() + " Time remaining when entered: " + red.getTimeLog());
+	    		            info.add(r);
+	    		            y.setText("Yellow: " + y.getText() + " Time remaining when entered: " + yellow.getTimeLog());
+	    		            info.add(y);
+	    		            b.setText("Blue: " + b.getText() + " Time remaining when entered: " + blue.getTimeLog());
+	    		            info.add(b);
+	    		            warn.setText("Bids moved to Ricochet Robots Frame");
+	    		            info.validate();
+	    		            callBid.setEnabled(false);
+	    		            timer.stop();
+	    		            
+	    		            
+	    		            
+	    		        }
+	    		        countdown.setText("Countdown: " + timeStart);
+	    		        timeStart--;
+	    		    }
+	    		});
+	    		callBid.addActionListener(new ActionListener() {
+	    		    public void actionPerformed(ActionEvent e) {
+	    		        
+	    		        
+	    		        
+	    		        timer.start();
+	    		    }
+	    		});
+	    		
+	    		callBid.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (Integer.parseInt(callBid.getText()) <= lowestBid) {
+							lowestBid = Integer.parseInt(callBid.getText());
+							red.makeBid(lowestBid, timeStart);
+							yellow.makeBid(lowestBid, timeStart-1);
+							blue.makeBid(lowestBid, timeStart-2);
+							timeLog = timeStart+1;
+						}
+						
+						
+						r.setText(Integer.toString(red.getBid()));
+						y.setText(Integer.toString(yellow.getBid()));
+						b.setText(Integer.toString(blue.getBid()));
+						
+						
+						bidPanel.add(bidEnter);
+			    		bidPanel.add(callBid);
+			    		bidPanel.add(warn);
+						
+						
+						//bidFrame.dispose();
+						
+					}
+	    			
+	    		});
+	    		
+	    		
+	    		bidPanel.add(bidEnter);
+	    		bidPanel.add(callBid);
+	    		bidPanel.add(currentBids);
+	    		bidPanel.add(r);
+				bidPanel.add(y);
+				bidPanel.add(b);
+				bidPanel.add(countdown);
+	    		bidFrame.setLayout(new GridLayout());
+	    		
+	    		bidFrame.add(bidPanel);
+	    		
+	    		
+	    		
+	    		bidFrame.setLocationRelativeTo(null);
+	    		bidFrame.setVisible(true);
+				}});
+		
+		
 		info.add(next);
 		info.add(turn);
 		info.add(up);
@@ -104,6 +223,8 @@ public class RicochetRobots extends JFrame
 		info.add(left);
 		info.add(right);
 		
+		info.add(Bid);
+		info.setLayout(new GridLayout(7,7));
 		mainFrame.add(info);
 		mainFrame.setSize(1350,675);
 		mainFrame.setLayout(new GridLayout(1,2));
