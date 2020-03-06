@@ -239,7 +239,6 @@ public class RicochetRobots extends JFrame
 		mainFrame.setLayout(new GridLayout(1,2));
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
-			
 	}
 
 
@@ -252,15 +251,17 @@ public class RicochetRobots extends JFrame
 			case "right": moveUnits=1;break;
 		}
 		int nextLoc = pieceList.get(playerTurn).getLoc()+moveUnits;
-		if( (nextLoc<=255 && nextLoc>=0) && !(nextLoc%16==0 && direction=="right") && !(nextLoc%16==15 && direction=="left") ){
+		if( (nextLoc<=255 && nextLoc>=0) && !(nextLoc%16==0 && direction.equals("right")) && !(nextLoc%16==15 && direction.equals("left")) ){
 			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(prevIcon[playerTurn]);
 			pieceList.get(playerTurn).move(moveUnits);
 			prevIcon[playerTurn] = buttonList.get(pieceList.get(playerTurn).getLoc()).getIcon();
 			buttonList = save;
 			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));
+			moveRobot(direction);
 		} else{
 			//Out of bounds
 		}
+
 	}
 
 
