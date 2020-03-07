@@ -25,7 +25,7 @@ public class RicochetRobots extends JFrame
     ArrayList<Piece> pieceList = new ArrayList<>();
     ArrayList<Icon> meepleList = new ArrayList<>();
     int lowestBid = 100;
-    int timeStart = 10;
+    int timeStart = 60;
     private Timer timer;
     private int timeLog;
     
@@ -239,6 +239,19 @@ public class RicochetRobots extends JFrame
 		mainFrame.setLayout(new GridLayout(1,2));
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
+	}
+
+	public String randDirection() {
+		ArrayList<String> directionList = new ArrayList<>();
+		directionList.add("up");
+		directionList.add("down");
+		directionList.add("left");
+		directionList.add("right");
+		Random rand = new Random();
+		String dir = directionList.get(rand.nextInt(4));
+		
+		return(dir);
+		
 	}
 
 

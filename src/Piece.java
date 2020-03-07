@@ -11,7 +11,7 @@ public class Piece {
 		this.player = play;
 		
 	}
-	void move(int i) {
+	public void move(int i) {
 		
 		this.location = location+i;
 		
@@ -32,7 +32,7 @@ public class Piece {
 		
 		this.bid = rand.nextInt(scale+1);
 		if (scale<=lowestBid) {
-			if (bid >= lowestBid) {this.bid = rand.nextInt(scale+1);}
+			if (bid <= lowestBid) {this.bid = rand.nextInt(scale+1);}
 			}
 		else {
 			if (bid >= lowestBid) {this.bid = rand.nextInt(lowestBid+1);}
