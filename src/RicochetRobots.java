@@ -389,7 +389,8 @@ public class RicochetRobots extends JFrame
 				
 				simple.addActionListener(new ActionListener() {
 			        public void actionPerformed(ActionEvent arg0) {
-			        	new RicochetRobots();
+						new RicochetRobots();
+						save = buttonList;
 			        	intro.dispose();
 			        	
 						}});
