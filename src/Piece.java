@@ -45,4 +45,15 @@ public class Piece {
 	public int getTimeLog() {
 		return(timeLog);
 	}
+
+
+
+
 }
+	
+
+
+
+
+
+

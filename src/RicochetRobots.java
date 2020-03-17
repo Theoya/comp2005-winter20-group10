@@ -1,7 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+
 
 import javax.swing.Timer;
 import javax.swing.*;
@@ -47,6 +48,22 @@ public class RicochetRobots extends JFrame
 		JButton Bid = new JButton("Bid");
 		
         Icon box = new ImageIcon("Images/Tile.png");
+        
+        
+        
+        JButton saveGame = new JButton("Save Game");
+        saveGame.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent arg0) {
+	        //	new RicochetRobots();
+	        	
+					Save savestate = new Save("C:\\Users\\taylo\\eclipse-workspace\\Ricochet Robots\\src",buttonList);
+				
+				
+	        	//mainFrame.dispose();
+				}});
+        
+        
+        
         
         for(int i = 0; i < 256; i++) 
         {
@@ -214,6 +231,7 @@ public class RicochetRobots extends JFrame
 				bidPanel.add(y);
 				bidPanel.add(b);
 				bidPanel.add(countdown);
+				
 	    		bidFrame.setLayout(new GridLayout());
 	    		
 	    		bidFrame.add(bidPanel);
@@ -233,25 +251,14 @@ public class RicochetRobots extends JFrame
 		info.add(right);
 		
 		info.add(Bid);
+		info.add(saveGame);
 		info.setLayout(new GridLayout(7,7));
 		mainFrame.add(info);
 		mainFrame.setSize(1350,675);
 		mainFrame.setLayout(new GridLayout(1,2));
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
-	}
-
-	public String randDirection() {
-		ArrayList<String> directionList = new ArrayList<>();
-		directionList.add("up");
-		directionList.add("down");
-		directionList.add("left");
-		directionList.add("right");
-		Random rand = new Random();
-		String dir = directionList.get(rand.nextInt(4));
-		
-		return(dir);
-		
+			
 	}
 
 
@@ -264,7 +271,7 @@ public class RicochetRobots extends JFrame
 			case "right": moveUnits=1;break;
 		}
 		int nextLoc = pieceList.get(playerTurn).getLoc()+moveUnits;
-		if( (nextLoc<=255 && nextLoc>=0) && !(nextLoc%16==0 && direction.equals("right")) && !(nextLoc%16==15 && direction.equals("left")) ){
+		if( (nextLoc<=255 && nextLoc>=0) && !(nextLoc%16==0 && direction=="right") && !(nextLoc%16==15 && direction=="left") ){
 			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(prevIcon[playerTurn]);
 			pieceList.get(playerTurn).move(moveUnits);
 			prevIcon[playerTurn] = buttonList.get(pieceList.get(playerTurn).getLoc()).getIcon();
@@ -274,8 +281,11 @@ public class RicochetRobots extends JFrame
 		} else{
 			//Out of bounds
 		}
-
+		
 	}
+	
+	
+	
 
 
 
@@ -379,8 +389,7 @@ public class RicochetRobots extends JFrame
 				
 				simple.addActionListener(new ActionListener() {
 			        public void actionPerformed(ActionEvent arg0) {
-						new RicochetRobots();
-						save = buttonList;
+			        	new RicochetRobots();
 			        	intro.dispose();
 			        	
 						}});
