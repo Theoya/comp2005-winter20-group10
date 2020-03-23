@@ -87,7 +87,7 @@ public class RicochetRobots extends JFrame
         
         
         Piece green = new Piece(56,1);
-        Piece red = new Piece(80,2);
+        Piece red = new Piece(81,2);
         Piece yellow = new Piece(180,3);
         Piece blue = new Piece(200,4);
         pieceList.add(green);
@@ -162,7 +162,7 @@ public class RicochetRobots extends JFrame
 				}});
 		greenRobot.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent arg0) {
-				chooseRobot("blue");
+				chooseRobot("green");
 	        
 				}});
 
