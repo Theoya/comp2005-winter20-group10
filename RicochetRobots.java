@@ -311,7 +311,7 @@ public class RicochetRobots extends JFrame
 		}
 		int nextLoc = pieceList.get(playerTurn).getLoc()+moveUnits;
 		if( (nextLoc<=255 && nextLoc>=0) && !(nextLoc%16==0 && direction=="right") && !(nextLoc%16==15 && direction=="left") ){
-			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(prevIcon[playerTurn]); //sets icon after the robot has been moved
+			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(prevIcon[playerTurn]); 
                         /*int currentLoc = buttonList.get(pieceList.get(playerTurn).getLoc());
                         if (direction === "up"){
                         	for (int i = currentLoc ; i <=  currentLoc  ;i-16)
@@ -326,9 +326,9 @@ public class RicochetRobots extends JFrame
                                      
                                      }}*/
 			pieceList.get(playerTurn).move(moveUnits); //next location determined
-			prevIcon[playerTurn] = buttonList.get(pieceList.get(playerTurn).getLoc()).getIcon(); //getting image for previous
+			prevIcon[playerTurn] = buttonList.get(pieceList.get(playerTurn).getLoc()).getIcon(); 
 			buttonList = save;
-			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));//Moves robot image
+			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));
 			moveRobot(direction);
 		} else{
 			//Out of bounds
