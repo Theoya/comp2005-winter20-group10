@@ -312,19 +312,7 @@ public class RicochetRobots extends JFrame
 		int nextLoc = pieceList.get(playerTurn).getLoc()+moveUnits;
 		if( (nextLoc<=255 && nextLoc>=0) && !(nextLoc%16==0 && direction=="right") && !(nextLoc%16==15 && direction=="left") ){
 			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(prevIcon[playerTurn]); 
-                        /*int currentLoc = buttonList.get(pieceList.get(playerTurn).getLoc());
-                        if (direction === "up"){
-                        	for (int i = currentLoc ; i <=  currentLoc  ;i-16)
-                                    {
-                                      if (buttonList.get(i) === buttonList.get(5)){
-                                         {
-                                           if (playerTurn != 0){
-                                              
-                                         
-                                         
-                                         
-                                     
-                                     }}*/
+                        
 			pieceList.get(playerTurn).move(moveUnits); //next location determined
 			prevIcon[playerTurn] = buttonList.get(pieceList.get(playerTurn).getLoc()).getIcon(); 
 			buttonList = save;
