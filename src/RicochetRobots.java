@@ -22,8 +22,7 @@ public class RicochetRobots extends JFrame
 	static ArrayList<JButton> buttonList = new ArrayList<>();
     static JLabel turn = new JLabel("Player 1");
 	static int playerTurn = 0;
-	private static int[][] walls = new int[20][4]; 
-	private static ImageIcon[] prevIcon = {new ImageIcon("Images/Tile.png"),new ImageIcon("Images/Tile.png"),new ImageIcon("Images/Tile.png"),new ImageIcon("Images/Tile.png")};
+	private static ImageIcon[] prevIcon = {new ImageIcon("Images/Tile.PNG"),new ImageIcon("Images/Tile.PNG"),new ImageIcon("Images/Tile.PNG"),new ImageIcon("Images/Tile.PNG")};
     ArrayList<Piece> pieceList = new ArrayList<>();
     ArrayList<Icon> meepleList = new ArrayList<>();
     int lowestBid = 100;
@@ -182,22 +181,22 @@ public class RicochetRobots extends JFrame
 	    		JLabel warn = new JLabel("New bids must be lower than all previous builds, you are Green");
 	    		JTextField callBid = new JTextField();
 	    		callBid.setColumns(4);
-	    		JLabel g = new JLabel();
-	    		JLabel r = new JLabel();
-	    		JLabel y = new JLabel();
-	    		JLabel b = new JLabel();
+	    		JLabel p1 = new JLabel();
+	    		JLabel p2 = new JLabel();
+	    		JLabel p3 = new JLabel();
+	    		JLabel p4 = new JLabel();
 	    		
 	    		timer = new Timer(1000, new ActionListener() {
 	    		    public void actionPerformed(ActionEvent evt) {
 	    		        if(timeStart == 0){
-	    		        	g.setText("Green: " + callBid.getText() + " Time remaining when entered: " + timeLog);
-	    		        	info.add(g);
-	    		        	r.setText("Red: " + r.getText() + " Time remaining when entered: " + red.getTimeLog());
-	    		            info.add(r);
-	    		            y.setText("Yellow: " + y.getText() + " Time remaining when entered: " + yellow.getTimeLog());
-	    		            info.add(y);
-	    		            b.setText("Blue: " + b.getText() + " Time remaining when entered: " + blue.getTimeLog());
-	    		            info.add(b);
+	    		        	p1.setText("Green: " + callBid.getText() + " Time remaining when entered: " + timeLog);
+	    		        	info.add(p1);
+	    		        	p2.setText("Red: " + p2.getText() + " Time remaining when entered: " + red.getTimeLog());
+	    		            info.add(p2);
+	    		            p3.setText("Yellow: " + p3.getText() + " Time remaining when entered: " + yellow.getTimeLog());
+	    		            info.add(p3);
+	    		            p4.setText("Blue: " + p4.getText() + " Time remaining when entered: " + blue.getTimeLog());
+	    		            info.add(p4);
 	    		            warn.setText("Bids moved to Ricochet Robots Frame");
 	    		            info.validate();
 	    		            callBid.setEnabled(false);
@@ -232,9 +231,9 @@ public class RicochetRobots extends JFrame
 						}
 						
 						
-						r.setText(Integer.toString(red.getBid()));
-						y.setText(Integer.toString(yellow.getBid()));
-						b.setText(Integer.toString(blue.getBid()));
+						p2.setText(Integer.toString(red.getBid()));
+						p3.setText(Integer.toString(yellow.getBid()));
+						p4.setText(Integer.toString(blue.getBid()));
 						
 						
 						bidPanel.add(bidEnter);
@@ -252,9 +251,9 @@ public class RicochetRobots extends JFrame
 	    		bidPanel.add(bidEnter);
 	    		bidPanel.add(callBid);
 	    		bidPanel.add(currentBids);
-	    		bidPanel.add(r);
-				bidPanel.add(y);
-				bidPanel.add(b);
+	    		bidPanel.add(p2);
+				bidPanel.add(p3);
+				bidPanel.add(p4);
 				bidPanel.add(countdown);
 				
 	    		bidFrame.setLayout(new GridLayout());
@@ -311,7 +310,6 @@ public class RicochetRobots extends JFrame
 			case "right": moveUnits=1;break;
 		}
 		int nextLoc = pieceList.get(playerTurn).getLoc()+moveUnits;
-//		Icon currIcon = buttonList.get(pieceList.get(playerTurn).getLoc()).getIcon;
 		
 		if( (nextLoc<=255 && nextLoc>=0) && 
 			!(nextLoc%16==0 && direction=="right") && 
