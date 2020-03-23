@@ -325,9 +325,7 @@ public class RicochetRobots extends JFrame
 	}
 	
 
-    private void validMove(){
-    }
-	
+   
 	
 
 
