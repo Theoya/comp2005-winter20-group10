@@ -29,7 +29,14 @@ public class RicochetRobots extends JFrame
     int i = 0;
     int timeStart = 1;
     private Timer timer;
-    private int timeLog;
+	private int timeLog;
+
+	private static Token token = new Token();
+	private String currChip;
+	Piece green = new Piece(56,1);
+	Piece red = new Piece(81,2);
+	Piece yellow = new Piece(180,3);
+	Piece blue = new Piece(200,4);
     static JTextField callBid = new JTextField();
     
     
@@ -86,11 +93,7 @@ public class RicochetRobots extends JFrame
         
         JPanel info = new JPanel();
         
-        
-        Piece green = new Piece(56,1);
-        Piece red = new Piece(81,2);
-        Piece yellow = new Piece(180,3);
-        Piece blue = new Piece(200,4);
+
         pieceList.add(green);
         pieceList.add(red);
         pieceList.add(yellow);
@@ -169,8 +172,8 @@ public class RicochetRobots extends JFrame
 
 		Bid.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent arg0) {
-	        	
-	        	
+
+				currChip = Token.getToken();
 	        	JFrame bidFrame = new JFrame("Enter Your Bid");
 	    		bidFrame.setSize(400,400);
 	    		bidFrame.setLocationRelativeTo(null);
@@ -185,7 +188,8 @@ public class RicochetRobots extends JFrame
 	    		JLabel p1 = new JLabel();
 	    		JLabel p2 = new JLabel();
 	    		JLabel p3 = new JLabel();
-	    		JLabel p4 = new JLabel();
+				JLabel p4 = new JLabel();
+				JLabel chip = new JLabel();
 	    		
 	    		timer = new Timer(1000, new ActionListener() {
 	    		    public void actionPerformed(ActionEvent evt) {
@@ -197,7 +201,9 @@ public class RicochetRobots extends JFrame
 	    		            p3.setText("Yellow: " + p3.getText() + " Time remaining when entered: " + yellow.getTimeLog());
 	    		            info.add(p3);
 	    		            p4.setText("Blue: " + p4.getText() + " Time remaining when entered: " + blue.getTimeLog());
-	    		            info.add(p4);
+							info.add(p4);
+							chip.setText("Target token : "+ currChip);
+							info.add(chip);
 	    		            warn.setText("Bids moved to Ricochet Robots Frame");
 	    		            info.validate();
 	    		            callBid.setEnabled(false);
@@ -315,10 +321,14 @@ public class RicochetRobots extends JFrame
 		}
 		int nextLoc = pieceList.get(playerTurn).getLoc()+moveUnits;
 		int bid = Integer.parseInt(callBid.getText()) - i;
-                int currentLoc = pieceList.get(playerTurn).getLoc();
+                // int currentLoc = pieceList.get(playerTurn).getLoc();
 		if( (nextLoc<=255 && nextLoc>=0) && 
 			!(nextLoc%16==0 && direction=="right") && 
 			!(nextLoc%16==15 && direction=="left") && (bid > 0) &&
+			!(nextLoc== (pieceList.get((playerTurn+1)%4).getLoc()) ||
+			nextLoc == (pieceList.get((playerTurn+2)%4).getLoc()) ||
+			nextLoc == (pieceList.get((playerTurn+3)%4).getLoc())
+			) &&
                         // (currentLoc + 1 <=255 && currentLoc + 1>=0) && (currentLoc + 16 <=255 && currentLoc + 16>=0) && (currentLoc - 1 <=255 && currentLoc - 1>=0) && (currentLoc - 16 <=255 && currentLoc - 16>=0) &&
 			!( direction.equals("up") && 
 				( prevIcon[playerTurn].toString().equals( "Images/TWall.PNG" ) ||
@@ -364,8 +374,10 @@ public class RicochetRobots extends JFrame
 			 else{
 							System.out.println(bid);
 							i = i + 1;
-							if (bid > 0) {
-						 }
+							if( prevIcon[playerTurn].toString().equals("Images/"+currChip) ) {
+								turn.setText("Player "+playerTurn+" Wins");
+								System.out.println("Player "+playerTurn+" Wins");
+							};
 						}
 			
 		
@@ -394,6 +406,11 @@ public class RicochetRobots extends JFrame
 		}
 		playerTurn = (playerTurn+1) % 4;
     	
+	}
+	
+	private void resetBoard() {
+        buttonList = save;
+        
     }
     
     
