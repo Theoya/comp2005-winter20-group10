@@ -26,10 +26,11 @@ public class RicochetRobots extends JFrame
     ArrayList<Piece> pieceList = new ArrayList<>();
     ArrayList<Icon> meepleList = new ArrayList<>();
     int lowestBid = 100;
-    int timeStart = 60;
+    int i = 0;
+    int timeStart = 1;
     private Timer timer;
     private int timeLog;
-    
+    static JTextField callBid = new JTextField();
     
     
     
@@ -179,7 +180,7 @@ public class RicochetRobots extends JFrame
 	    		JLabel currentBids = new JLabel("Other Bids:");
 	    		JLabel countdown = new JLabel();
 	    		JLabel warn = new JLabel("New bids must be lower than all previous builds, you are Green");
-	    		JTextField callBid = new JTextField();
+	    		
 	    		callBid.setColumns(4);
 	    		JLabel p1 = new JLabel();
 	    		JLabel p2 = new JLabel();
@@ -300,20 +301,25 @@ public class RicochetRobots extends JFrame
 			
 
 		}
+       
+      
 
 	private void moveRobot(String direction){
-		int moveUnits = 0;
-		switch(direction){
+                int moveUnits = 0;
+                switch(direction){
 			case "up": moveUnits=-16;break;
 			case "down": moveUnits=16;break;
 			case "left": moveUnits=-1;break;
 			case "right": moveUnits=1;break;
+                        
 		}
 		int nextLoc = pieceList.get(playerTurn).getLoc()+moveUnits;
-		
+		int bid = Integer.parseInt(callBid.getText()) - i;
+                int currentLoc = pieceList.get(playerTurn).getLoc();
 		if( (nextLoc<=255 && nextLoc>=0) && 
 			!(nextLoc%16==0 && direction=="right") && 
-			!(nextLoc%16==15 && direction=="left") &&
+			!(nextLoc%16==15 && direction=="left") && (bid > 0) &&
+                        // (currentLoc + 1 <=255 && currentLoc + 1>=0) && (currentLoc + 16 <=255 && currentLoc + 16>=0) && (currentLoc - 1 <=255 && currentLoc - 1>=0) && (currentLoc - 16 <=255 && currentLoc - 16>=0) &&
 			!( direction.equals("up") && 
 				( prevIcon[playerTurn].toString().equals( "Images/TWall.PNG" ) ||
 				prevIcon[playerTurn].toString().equals( "Images/YellowBallWithTWall.PNG" ) ||
@@ -348,10 +354,20 @@ public class RicochetRobots extends JFrame
 			prevIcon[playerTurn] = (ImageIcon)buttonList.get(pieceList.get(playerTurn).getLoc()).getIcon(); //Piece overriding this icon
 			buttonList = save;
 			buttonList.get(pieceList.get(playerTurn).getLoc()).setIcon(meepleList.get(playerTurn));
+
+                        
 			moveRobot(direction);
-		} else{
-			//Out of bounds
-		}
+                        
+		 
+		
+			 }
+			 else{
+							System.out.println(bid);
+							i = i + 1;
+							if (bid > 0) {
+						 }
+						}
+			
 		
 	}
 	
