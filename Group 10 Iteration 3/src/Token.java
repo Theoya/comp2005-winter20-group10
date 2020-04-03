@@ -36,7 +36,8 @@ public class Token {
         Random rand = new Random();
         String output = chips.get(rand.nextInt(17));
         chips.remove(output);
-        return output;
+        tokenType = output;
+        return tokenType;
     }
     
     
