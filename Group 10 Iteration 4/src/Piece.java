@@ -19,6 +19,10 @@ public class Piece {
 	public int getLoc() {
 		return(location);
 	}
+
+	public void setLoc(int loc){
+		this.location = loc;
+	}
 	
 	public int getPlayer() {
 		return(player);

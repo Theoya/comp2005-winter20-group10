@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.Timer;
 import javax.swing.*;
+import java.util.Random;
 
 
 
@@ -38,7 +39,8 @@ public class RicochetRobots extends JFrame
 	static Piece yellow;
 	static Piece blue;
     static JTextField callBid = new JTextField();
-    
+	private boolean AITurn = false;
+	private String hint = "";
     
     
     public RicochetRobots() 
@@ -58,8 +60,8 @@ public class RicochetRobots extends JFrame
 		JButton yellowRobot = new JButton("Yellow");
 		JButton greenRobot = new JButton("Green");
 		JButton blueRobot = new JButton("Blue");
-
-        Icon box = new ImageIcon("Images/Tile.png");
+		
+		Icon box = new ImageIcon("Images/Tile.png");
         
         
         
@@ -73,7 +75,59 @@ public class RicochetRobots extends JFrame
 				
 	        	//mainFrame.dispose();
 				}});
-        
+
+
+		JButton AI = new JButton("AI");
+		AI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AITurn = true;
+				int minPathLength = 1001;
+				int maxAttempts = 100;
+				int currAttempt = 0;
+				int maxMoves = 1000;
+				String tempHint = "";
+				int[] pLocs = {pieceList.get(0).getLoc(),pieceList.get(1).getLoc(),pieceList.get(2).getLoc(),pieceList.get(3).getLoc()};
+				while(currAttempt<maxAttempts){
+					Random rand = new Random();
+					int moveCount = 0;
+					i = 0;
+					callBid.setText(""+maxMoves);
+					while( moveCount<maxMoves && !prevIcon[playerTurn].toString().equals(currChip) ){
+						int moveDir = rand.nextInt(4);
+						int piece = rand.nextInt(4);
+						playerTurn = piece;
+						String dir = "";
+						switch(moveDir){
+							case 0: dir="up";break;
+							case 1: dir="down";break;
+							case 2: dir="left";break;
+							case 3: dir="right";break;
+						}
+						if(moveCount==0)tempHint=dir;
+						moveRobot(dir);
+						moveCount++;
+					}
+					if( prevIcon[playerTurn].toString().equals(currChip) ){
+						if(moveCount<minPathLength){
+							minPathLength=moveCount;
+							System.out.println(moveCount);
+							hint = tempHint;
+							turn.setText("AI won in: "+moveCount);
+						}
+						for(int i = 0; i<4; i++) {
+							buttonList.get( pieceList.get(i).getLoc() ).setIcon(prevIcon[i]);
+							pieceList.get(i).setLoc(pLocs[i]);
+							prevIcon[i]=(ImageIcon)buttonList.get( pLocs[i] ).getIcon();
+							buttonList.get( pLocs[i] ).setIcon(meepleList.get(i));
+						}
+						moveCount=1000;
+					}
+					currAttempt++;
+				}
+				AITurn=false;
+			}
+		});
+
         
         
         
@@ -288,6 +342,9 @@ public class RicochetRobots extends JFrame
 		
 		info.add(Bid);
 		info.add(saveGame);
+
+		info.add(AI);
+
 		info.setLayout(new GridLayout(7,7));
 		mainFrame.add(info);
 		mainFrame.setSize(1350,675);
@@ -375,7 +432,7 @@ public class RicochetRobots extends JFrame
 			 else{
 							System.out.println(bid);
 							i = i + 1;
-							if( prevIcon[playerTurn].toString().equals("Images/"+currChip) ) {
+							if( prevIcon[playerTurn].toString().equals(currChip) && !AITurn) {
 								turn.setText("Player "+playerTurn+" Wins");
 								System.out.println("Player "+playerTurn+" Wins");
 							};
