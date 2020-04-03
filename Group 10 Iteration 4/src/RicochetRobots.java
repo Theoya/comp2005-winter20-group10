@@ -23,8 +23,8 @@ public class RicochetRobots extends JFrame
     static JLabel turn = new JLabel("Player 1");
 	static int playerTurn = 0;
 	private static ImageIcon[] prevIcon = {new ImageIcon("Images/Tile.PNG"),new ImageIcon("Images/Tile.PNG"),new ImageIcon("Images/Tile.PNG"),new ImageIcon("Images/Tile.PNG")};
-    ArrayList<Piece> pieceList = new ArrayList<>();
-    ArrayList<Icon> meepleList = new ArrayList<>();
+    static ArrayList<Piece> pieceList = new ArrayList<>();
+    static ArrayList<Icon> meepleList = new ArrayList<>();
     int lowestBid = 100;
     int i = 0;
     int timeStart = 1;
@@ -33,11 +33,11 @@ public class RicochetRobots extends JFrame
 
 	private static Token token = new Token();
 	private String currChip;
-	Piece green = new Piece(56,1);
-	Piece red = new Piece(81,2);
-	Piece yellow = new Piece(180,3);
-	Piece blue = new Piece(200,4);
-    static JTextField callBid = new JTextField();
+	static JTextField callBid = new JTextField();
+	static Piece green;
+	static Piece red;
+	static Piece yellow;
+	static Piece blue;
     
     
     
@@ -54,11 +54,11 @@ public class RicochetRobots extends JFrame
 		JButton right = new JButton("right");
 		
 		JButton Bid = new JButton("Bid");
-        JButton redRobot = new JButton("Red");
-		JButton yellowRobot = new JButton("Yellow");
-		JButton greenRobot = new JButton("Green");
-		JButton blueRobot = new JButton("Blue");
-
+                JButton redRobot = new JButton("red");
+                JButton yellowRobot = new JButton("yellow");
+                JButton greenRobot = new JButton("green");
+                JButton blueRobot = new JButton("blue");
+		
         Icon box = new ImageIcon("Images/Tile.png");
         
         
@@ -68,7 +68,7 @@ public class RicochetRobots extends JFrame
 	        public void actionPerformed(ActionEvent arg0) {
 	        //	new RicochetRobots();
 	        	
-					Save savestate = new Save("C:\\Users\\taylo\\eclipse-workspace\\Ricochet Robots\\src",buttonList);
+					Save savestate = new Save(System.getProperty("user.dir"),buttonList);
 				
 				
 	        	//mainFrame.dispose();
@@ -94,17 +94,16 @@ public class RicochetRobots extends JFrame
         JPanel info = new JPanel();
         
 
-        pieceList.add(green);
-        pieceList.add(red);
-        pieceList.add(yellow);
-	pieceList.add(blue);
+        // pieceList.add(green);
+        // pieceList.add(red);
+        // pieceList.add(yellow);
+		// pieceList.add(blue);
         
         meepleList.add(new ImageIcon("Images/GreenMeeple.PNG"));
         meepleList.add(new ImageIcon("Images/RedMeeple.PNG"));
         meepleList.add(new ImageIcon("Images/YellowMeeple.PNG"));
 		meepleList.add(new ImageIcon("Images/BlueMeeple.PNG"));
 
-		for(int i = 0; i<4;i++) buttonList.get(pieceList.get(i).getLoc()).setIcon(meepleList.get(i)); //set robots' initial position
 		
 
         
@@ -173,8 +172,7 @@ public class RicochetRobots extends JFrame
 		Bid.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent arg0) {
 
-				currChip = "Images/" + Token.getToken();
-
+				currChip = Token.getToken();
 	        	JFrame bidFrame = new JFrame("Enter Your Bid");
 	    		bidFrame.setSize(400,400);
 	    		bidFrame.setLocationRelativeTo(null);
@@ -203,9 +201,7 @@ public class RicochetRobots extends JFrame
 	    		            info.add(p3);
 	    		            p4.setText("Blue: " + p4.getText() + " Time remaining when entered: " + blue.getTimeLog());
 							info.add(p4);
-							chip.setText("Target token : ");
-							chip.setIcon(new javax.swing.ImageIcon(getClass().getResource(currChip)));
-							chip.setHorizontalTextPosition(SwingConstants.LEFT);
+							chip.setText("Target token : "+ currChip);
 							info.add(chip);
 	    		            warn.setText("Bids moved to Ricochet Robots Frame");
 	    		            info.validate();
@@ -375,7 +371,7 @@ public class RicochetRobots extends JFrame
 		
 			 }
 			 else{
-							System.out.println(bid);
+							//System.out.println(bid);
 							i = i + 1;
 							if( prevIcon[playerTurn].toString().equals("Images/"+currChip) ) {
 								turn.setText("Player "+playerTurn+" Wins");
@@ -416,7 +412,103 @@ public class RicochetRobots extends JFrame
         
     }
     
-    
+	
+	
+	public static void simple() {
+		buttonList.get(251).setIcon(new ImageIcon("Images/RWall.PNG"));
+		buttonList.get(246).setIcon(new ImageIcon("Images/RWall.PNG"));
+		
+		buttonList.get(227).setIcon(new ImageIcon("Images/YellowTriangle.PNG"));
+		buttonList.get(226).setIcon(new ImageIcon("Images/RWall.PNG"));
+		
+		buttonList.get(218).setIcon(new ImageIcon("Images/BlueStarTWall.PNG"));
+		buttonList.get(217).setIcon(new ImageIcon("Images/RWall.PNG"));
+		buttonList.get(214).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(213).setIcon(new ImageIcon("Images/RedStar.PNG"));
+		buttonList.get(211).setIcon(new ImageIcon("Images/BWall.PNG"));
+		
+		buttonList.get(205).setIcon(new ImageIcon("Images/TWall.PNG"));
+		//buttonList.get(202).setIcon(new ImageIcon("Images/BWall.PNG"));
+		buttonList.get(197).setIcon(new ImageIcon("Images/BWall.PNG"));
+		
+		buttonList.get(189).setIcon(new ImageIcon("Images/GreenBallLWall.PNG"));
+		//buttonList.get(188).setIcon(new ImageIcon("Images/RWall.PNG"));
+		buttonList.get(180).setIcon(new ImageIcon("Images/TWall.PNG"));
+		buttonList.get(176).setIcon(new ImageIcon("Images/BWall.PNG"));
+		
+		buttonList.get(175).setIcon(new ImageIcon("Images/BWall.PNG"));
+		buttonList.get(174).setIcon(new ImageIcon("Images/TWall.PNG"));
+		buttonList.get(169).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(168).setIcon(new ImageIcon("Images/RedTriangle.PNG"));
+		buttonList.get(164).setIcon(new ImageIcon("Images/GreenPlanet.PNG"));
+		buttonList.get(163).setIcon(new ImageIcon("Images/RWall.PNG"));
+		buttonList.get(161).setIcon(new ImageIcon("Images/TWall.PNG"));
+		
+		buttonList.get(159).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(158).setIcon(new ImageIcon("Images/YellowPlanet.PNG"));
+		buttonList.get(152).setIcon(new ImageIcon("Images/BWall.PNG"));
+		buttonList.get(146).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(145).setIcon(new ImageIcon("Images/BlueBall.PNG"));
+
+		buttonList.get(136).setIcon(new ImageIcon("Images/BRCentre.PNG"));
+		buttonList.get(135).setIcon(new ImageIcon("Images/BLCentre.PNG"));
+		//buttonList.get(134).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(133).setIcon(new ImageIcon("Images/VortexRightWall.PNG"));
+
+
+		buttonList.get(120).setIcon(new ImageIcon("Images/TLCentre.PNG"));
+		buttonList.get(119).setIcon(new ImageIcon("Images/TRCentre.PNG"));
+		buttonList.get(117).setIcon(new ImageIcon("Images/BWall.PNG"));
+		buttonList.get(115).setIcon(new ImageIcon("Images/TWall.PNG"));
+
+		buttonList.get(108).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(107).setIcon(new ImageIcon("Images/YellowBallWithTWall.PNG"));		
+		buttonList.get(99).setIcon(new ImageIcon("Images/BluePLanetWithLWall.PNG"));
+		//buttonList.get(98).setIcon(new ImageIcon("Images/RWall.PNG"));
+
+		buttonList.get(94).setIcon(new ImageIcon("Images/RedStar.PNG"));
+		buttonList.get(93).setIcon(new ImageIcon("Images/RWall.PNG"));
+		//buttonList.get(91).setIcon(new ImageIcon("Images/BWall.PNG"));
+		buttonList.get(80).setIcon(new ImageIcon("Images/BWall.PNG"));
+		
+		buttonList.get(70).setIcon(new ImageIcon("Images/TWall.PNG"));
+
+		buttonList.get(63).setIcon(new ImageIcon("Images/BWall.PNG"));
+		buttonList.get(57).setIcon(new ImageIcon("Images/TWall.PNG"));
+		buttonList.get(55).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(54).setIcon(new ImageIcon("Images/YellowStar.PNG"));
+		
+		buttonList.get(42).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(41).setIcon(new ImageIcon("Images/BlueTriangle.PNG"));
+		buttonList.get(34).setIcon(new ImageIcon("Images/LWall.PNG"));
+		buttonList.get(33).setIcon(new ImageIcon("Images/GreenTriangle.PNG"));
+		
+		buttonList.get(29).setIcon(new ImageIcon("Images/RedPlanet.PNG"));
+		buttonList.get(28).setIcon(new ImageIcon("Images/RWall.PNG"));
+		buttonList.get(20).setIcon(new ImageIcon("Images/RedBall.PNG"));
+		buttonList.get(19).setIcon(new ImageIcon("Images/RWall.PNG"));
+		buttonList.get(17).setIcon(new ImageIcon("Images/BWall.PNG"));
+
+		buttonList.get(13).setIcon(new ImageIcon("Images/BWall.PNG"));
+		buttonList.get(11).setIcon(new ImageIcon("Images/RWall.PNG"));
+		buttonList.get(4).setIcon(new ImageIcon("Images/BWall.PNG"));
+		buttonList.get(1).setIcon(new ImageIcon("Images/RWall.PNG"));
+
+
+		green = new Piece(93,1);
+		red = new Piece(179,2);
+		yellow = new Piece(58,3);
+		blue = new Piece(0,4);
+
+		pieceList.add(green);
+		pieceList.add(red);
+		pieceList.add(yellow);
+		pieceList.add(blue);
+
+
+		for(int i = 0; i<4;i++)	buttonList.get(pieceList.get(i).getLoc()).setIcon(meepleList.get(i)); //set robots' initial position
+
+	}
     //Here is the proto-code for making the map for the complex/simple board
     //I cannot see the icons for whatever reason but here is most of the code
     public static void complex() {
@@ -481,8 +573,18 @@ public class RicochetRobots extends JFrame
     	buttonList.get(236).setIcon(new ImageIcon("Images/BlueBar.PNG"));
     	buttonList.get(247).setIcon(new ImageIcon("Images/RWall.PNG"));
     	buttonList.get(251).setIcon(new ImageIcon("Images/RWall.PNG"));
-    	
-    	
+		
+		green = new Piece(56,1);
+		red = new Piece(81,2);
+		yellow = new Piece(180,3);
+		blue = new Piece(200,4);
+
+		pieceList.add(green);
+		pieceList.add(red);
+		pieceList.add(yellow);
+		pieceList.add(blue);
+
+		for(int i = 0; i<4;i++) buttonList.get(pieceList.get(i).getLoc()).setIcon(meepleList.get(i)); //set robots' initial position    	
     	
     }
     
@@ -493,11 +595,14 @@ public class RicochetRobots extends JFrame
 		//Size choosing
 				JFrame intro = new JFrame("Choose game mode");
 				JPanel icky = new JPanel();
-				JButton simple = new JButton("Simple");JButton complex = new JButton("Complex");
+				JButton simple = new JButton("Simple");
+				JButton complex = new JButton("Complex");
 				
 				simple.addActionListener(new ActionListener() {
 			        public void actionPerformed(ActionEvent arg0) {
-			        	new RicochetRobots();
+						new RicochetRobots();
+						simple();
+						save = buttonList;
 			        	intro.dispose();
 			        	
 						}});
